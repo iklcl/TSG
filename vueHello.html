@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Vue 测试</title>
+		<script src="https://cdn.staticfile.org/vue/2.2.2/vue.min.js"></script>
+	</head>
+	<style>
+		.class1{
+		background: #444444;
+		color: #EEEEEE;
+	}
+	#IDL{
+		background: red;
+	}
+</style>
+	<body>
+		<div id="app">
+			<p>{{ message }}</p>
+			<p>{{data}}</p>
+			<p>{{details()}}</p>
+			<div v-html="html" style="color: #0000FF;"></div>
+			<label for="r1">修改颜色</label><input type="checkbox" v-model="use" id="r1">
+			<br />
+			<div v-bind:class="{'class1':use}">
+				v-bind:class 指令
+			</div>
+			{{5+4}}<br />
+			<!-- {{ ok ? 'YES' : 'NO' }}<br /> -->
+			<div v-bind:id="id">red</div>
+
+			<p v-if="seen">现在你看到我了</p>
+			<p>{{message}}</p>
+			<button v-on:click="reverse">反转</button><br />
+			{{ message | capitalize | capitalize2}}
+			<div v-if="Math.random()>0.5&&Math.random()<0.8">
+				yes
+			</div>
+			<div v-else-if="Math.random()>0.88">
+				no,li
+			</div>
+			<div v-else>
+				no
+			</div>
+			<div v-show="seen">
+				现在你看到我了
+			</div>
+		</div>
+		<div id="box2">
+			<ol>
+				<li v-for="site in sites">
+					{{site.name}}
+				</li>
+			</ol>
+			<ul>
+				<template v-for="site in sites">
+					<li>{{ site.name }}</li>
+					<li>--------------</li>
+				</template>
+			</ul>
+			<ul>
+				<li v-for="(value, key) in object">
+					{{ key }} : {{ value }}
+				</li>
+			</ul>
+			<ul>
+				<li v-for="(value, key, index) in object">
+					{{ index }}. {{ key }} : {{ value }}
+				</li>
+			</ul>
+			<ul>
+				<li v-for="n in 3">
+					{{ n }}
+				</li>
+			</ul>
+		</div>
+		<script>
+			new Vue({
+				el: "#box2",
+				data: {
+					sites: [{
+							name: 'Runoob'
+						},
+						{
+							name: 'Google'
+						},
+						{
+							name: 'Taobao'
+						}
+					],
+					object: {
+						name: 'tsg',
+						url: 'http://tsg',
+						slogan: '学nmb！'
+					}
+				}
+			})
+			new Vue({
+				el: '#app',
+				data: {
+					message: 'hello',
+					data: 'TSG',
+					name: '汤胜根',
+					html: '<h1>写入html</h1>',
+					use: false,
+					id: 'IDL',
+					seen: true
+				},
+				methods: {
+					details: function() {
+						return this.name + "傻逼"
+					},
+					reverse: function() {
+						this.message = this.message.split('').reverse().join('')
+					}
+				},
+				filters: {
+					capitalize: function(value) {
+						if (!value) return ''
+						value = value.toString()
+						return value.charAt(0).toUpperCase() + value.slice(1)
+					},
+					capitalize2: function(value) {
+						if (!value) return ''
+						value = value.toString()
+						return value.charAt(2).toUpperCase() + value.slice(2, 4)
+					},
+				}
+			})
+		</script>
+	</body>
+</html>
